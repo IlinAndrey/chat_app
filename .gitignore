@@ -9,11 +9,8 @@ chat-app/node_modules
 /coverage
 
 # production
-<<<<<<< HEAD:chat-app/.gitignore
-../django_react_chat_app/__pycache__/
-=======
+
 django_react_chat_app/__pycache__/
->>>>>>> a988ef804c632ab7ab128f421fd83776d61812e1:.gitignore
 
 # misc
 .DS_Store
