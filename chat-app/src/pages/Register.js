@@ -1,4 +1,10 @@
 import React from 'react'
+import {
+    createBrowserRouter,
+    RouterProvider,
+    Route,
+    Link,
+  } from "react-router-dom";
 
 function Register() {
   return (
@@ -80,9 +86,11 @@ function Register() {
 
           <p className="mt-10 text-center text-sm text-gray-500">
             Есть аккаунт?{' '}
-            <a href="#" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
-              Войдите
-            </a>
+            <Link to="/login">
+                <a className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+                    Войдите
+                </a>
+            </Link>
           </p>
         </div>
       </div>
