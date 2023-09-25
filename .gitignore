@@ -4,12 +4,12 @@
 chat-app/node_modules
 /.pnp
 .pnp.js
+.db.sqlite3
 
 # testing
 /coverage
 
 # production
-
 django_react_chat_app/__pycache__/
 
 # misc
