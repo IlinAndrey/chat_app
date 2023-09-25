@@ -21,7 +21,7 @@ function Register() {
 
           <div>
               <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
-                Nickname pup
+                Nickname
               </label>
               <div className="mt-2">
                 <input
@@ -86,7 +86,7 @@ function Register() {
 
           <p className="mt-10 text-center text-sm text-gray-500">
             Есть аккаунт?{' '}
-            <Link to="/login">
+            <Link to="/">
                 <a className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
                     Войдите
                 </a>
