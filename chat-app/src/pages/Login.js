@@ -12,7 +12,6 @@ function Login() {
 
   useEffect(() => {
     const csrftoken = Cookies.get('csrftoken');
-    console.log(csrftoken);
   }, []);
 
   return (
