@@ -1,12 +1,20 @@
-import React from 'react'
+import {React, useEffect} from 'react'
 import {
     createBrowserRouter,
     RouterProvider,
     Route,
     Link,
   } from "react-router-dom";
+import Cookies from 'js-cookie';
+
 
 function Login() {
+
+  useEffect(() => {
+    const csrftoken = Cookies.get('csrftoken');
+    console.log(csrftoken);
+  }, []);
+
   return (
     <div>
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -18,6 +26,7 @@ function Login() {
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form className="space-y-6" action="#" method="POST">
+            <input type="hidden" name="csrfmiddlewaretoken" value={Cookies.get('csrftoken')} />
             <div>
               <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                 Email
@@ -58,12 +67,13 @@ function Login() {
             </div>
 
             <div>
-              <button
-                type="submit"
-                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
-                Войти
-              </button>
+            <button
+              type="submit"
+              className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              
+            >
+              Войти
+            </button>
             </div>
           </form>
 
