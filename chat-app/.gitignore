@@ -9,7 +9,7 @@
 /coverage
 
 # production
-
+..//django_react_chat_app/__pycache__
 
 # misc
 .DS_Store
