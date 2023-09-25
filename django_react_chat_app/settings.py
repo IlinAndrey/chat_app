@@ -55,7 +55,9 @@ ROOT_URLCONF = 'django_react_chat_app.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'chat-app/build')],
+        'DIRS': [os.path.join(BASE_DIR, 'chat-app/build'),
+                os.path.join(BASE_DIR, 'chat-app/src/pages')
+                 ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
