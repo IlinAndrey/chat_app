@@ -7,13 +7,13 @@ import Chat from './pages/Chat';
 
 function App() {
   return (
-    // <BrowserRouter>
-    //   <Routes>
-    //     <Route path='*' element={<Login />} />
-    //     <Route path='registration' element={<Register />} />
-    //   </Routes>
-    // </BrowserRouter>
-    <Chat />
+    <BrowserRouter>
+      <Routes>
+        <Route path='*' element={<Login />} />
+        <Route path='registration' element={<Register />} />
+      </Routes>
+    </BrowserRouter>
+    // <Chat />
   );
 }
 
