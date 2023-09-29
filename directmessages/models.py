@@ -9,9 +9,9 @@ from directmessages.managers import DirectMessageManager
 
 class DirectMessageModel(models.Model):
     objects = DirectMessageManager()
-    sender = models.OneToOneField(User, on_delete=DO_NOTHING, related_name='Отправитель')
+    sender = models.ForeignKey(User, on_delete=DO_NOTHING, related_name='Отправитель')
     text = models.TextField()
-    recipient = models.OneToOneField(User, on_delete=DO_NOTHING, related_name='Получатель')
+    recipient = models.ForeignKey(User, on_delete=DO_NOTHING, related_name='Получатель')
     created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
