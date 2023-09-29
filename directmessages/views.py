@@ -1,6 +1,6 @@
 from django.db.models import Q
 from django.shortcuts import render
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, mixins
 
 from directmessages.models import DirectMessageModel
 from directmessages.serializers import DirectMessageSerializer
@@ -23,10 +23,17 @@ class ListDirectMessageApiView(generics.ListAPIView):
         return queryset
 
 
-class DetailDirectMessageApiView(generics.CreateAPIView):
+class DetailDirectMessageApiView(generics.RetrieveUpdateDestroyAPIView):
     queryset = DirectMessageModel.objects.all()
     serializer_class = DirectMessageSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+
+
+
+class CreateDirectMessageApiView(generics.CreateAPIView):
+    queryset = DirectMessageModel.objects.all()
+    serializer_class = DirectMessageSerializer
 
     def perform_create(self, serializer):
         sender = self.request.user
