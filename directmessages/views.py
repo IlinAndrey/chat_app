@@ -30,4 +30,5 @@ class DetailDirectMessageApiView(generics.CreateAPIView):
 
     def perform_create(self, serializer):
         sender = self.request.user
+        print(self.request.data)
         serializer.save(sender=sender)
