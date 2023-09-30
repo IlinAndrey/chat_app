@@ -10,22 +10,31 @@ import axios from 'axios';
 
 
 function Login() {
+  const csrftoken = Cookies.get('csrftoken')
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [csrf, setCsrf] = useState('')
 
-  const handleLogin = () => {
-    const data = { username, password, csrf };
 
-    axios.post('/api-auth/login/', data)
-      .then(response => {
-        console.log('Успешный вход:', response.data);
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    const data = { csrftoken, username, password };
+
+      axios.post('/api-auth/login/', data, {
+        headers: {
+          'X-CSRFToken' : csrftoken
+          }
       })
-      .catch(error => {
-        console.error('Ошибка входа:', error);
-      });
-  };
+        .then(response => {
+          console.log('Успешный вход:', response.data);
+          window.location.href = '/chat';
+        })
+        .catch(error => {
+          console.error('Ошибка входа:', error);
+        });
+
+  }
 
   return (
     <div>
@@ -37,8 +46,8 @@ function Login() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" action="#" method="POST">
-            <input type="hidden" onChange={e => setCsrf(e.target.value)} name="csrfmiddlewaretoken" value={Cookies.get('csrftoken')} />
+          <form className="space-y-6" onSubmit={handleLogin}>
+            <input type="hidden" name="csrfmiddlewaretoken" value={csrftoken} />
             <div>
               <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">
                 Username

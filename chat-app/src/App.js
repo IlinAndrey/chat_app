@@ -11,7 +11,7 @@ function App() {
       <Routes>
         <Route path='*' element={<Login />} />
         <Route path='registration' element={<Register />} />
-        <Route path='/api-auth/login/' element={<Chat />} />
+        <Route path='chat' element={<Chat />} />
       </Routes>
     </BrowserRouter>
   );
