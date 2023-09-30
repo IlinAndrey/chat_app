@@ -41,8 +41,8 @@ function Chat() {
                 </div>
             </div>
         </div>
-        <div className='flex flex-col items-center justify-center w-screen min-h-screen bg-gray-100 text-gray-800 p-10'>
-            <div class="flex flex-col flex-grow w-full max-w-xl bg-white shadow-xl rounded-lg overflow-hidden">
+        <div className='flex flex-col items-center justify-center w-full min-h-screen bg-gray-100 text-gray-800'>
+            <div class="flex flex-col flex-grow w-full max-w-full bg-white shadow-xl rounded-lg overflow-hidden">
                 <div class="flex flex-col flex-grow h-0 p-4 overflow-auto" ref={chatContainerRef}>
                     <div class="flex w-full mt-2 space-x-3 max-w-xs">
                         <div class="flex-shrink-0 h-10 w-10 rounded-full"></div>
