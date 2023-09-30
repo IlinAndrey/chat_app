@@ -23,7 +23,8 @@ function Login() {
 
       axios.post('/api-auth/login/', data, {
         headers: {
-          'X-CSRFToken' : csrftoken
+          'X-CSRFToken' : csrftoken,
+          'Content-Type': 'application/x-www-form-urlencoded',
           }
       })
         .then(response => {
