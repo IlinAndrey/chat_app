@@ -16,7 +16,7 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('api-auth/', include('rest_framework.urls')),
     path('api/v1/', include(router.urls)),
-    #path('api-auth/login/', views.index)
+    path('api-auth/login/', views.index),
     path('chat/', views.chat, name='chat' )
 ]
 

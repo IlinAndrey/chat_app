@@ -2,6 +2,7 @@
 
 # dependencies
 chat-app/node_modules
+chat-app/build
 /.pnp
 .pnp.js
 
