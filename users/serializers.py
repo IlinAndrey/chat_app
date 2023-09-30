@@ -6,11 +6,11 @@ from directmessages.models import DirectMessageModel
 
 
 class UserSerializer(HyperlinkedModelSerializer):
-    sender_messages = HyperlinkedRelatedField(view_name='directmessages-detail', many=True,queryset=DirectMessageModel.objects.all())
-    recipient_messages = HyperlinkedRelatedField(view_name='directmessages-detail', many=True,queryset=DirectMessageModel.objects.all())
+    # sender_messages = HyperlinkedRelatedField(view_name='directmessages-detail', many=True, read_only=True)
+    # recipient_messages = HyperlinkedRelatedField(view_name='directmessages-detail', many=True,read_only=True)
     class Meta:
         model = User
-        fields = ['username','password','email','id','sender_messages','recipient_messages']
+        fields = ['username','password','email','id']
 
     def create(self, validated_data):
         return User.objects.create_user(**validated_data)
