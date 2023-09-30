@@ -11,12 +11,12 @@ import axios from 'axios';
 
 function Login() {
 
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [csrf, setCsrf] = useState('')
 
   const handleLogin = () => {
-    const data = { email, password, csrf };
+    const data = { username, password, csrf };
 
     axios.post('/api-auth/login/', data)
       .then(response => {
@@ -40,16 +40,16 @@ function Login() {
           <form className="space-y-6" action="#" method="POST">
             <input type="hidden" onChange={e => setCsrf(e.target.value)} name="csrfmiddlewaretoken" value={Cookies.get('csrftoken')} />
             <div>
-              <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
-                Email
+              <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">
+                Username
               </label>
               <div className="mt-2">
                 <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  onChange={e => setEmail(e.target.value)}
+                  id="username"
+                  name="username"
+                  type="username"
+                  autoComplete="username"
+                  onChange={e => setUsername(e.target.value)}
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
