@@ -5,5 +5,5 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 def index(request):
     return render(request, 'index.html')
 
-def login(request):
-    return render(request, 'login.js')
+def chat(request):
+    return render(request, 'index.html')
