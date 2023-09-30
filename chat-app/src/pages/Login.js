@@ -14,7 +14,6 @@ function Login() {
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  // const [csrf, setCsrf] = useState('')
 
 
   const handleLogin = (e) => {
@@ -22,7 +21,11 @@ function Login() {
 
     const data = { csrftoken, username, password };
 
-      axios.post('/api-auth/login/', data)
+      axios.post('/api-auth/login/', data, {
+        headers: {
+          'X-CSRFToken' : csrftoken
+          }
+      })
         .then(response => {
           console.log('Успешный вход:', response.data);
           window.location.href = '/chat';
