@@ -7,7 +7,7 @@ def index(request):
     return render(request, 'index.html')
 
 
-@login_required
+#@login_required
 @ensure_csrf_cookie
 def chat(request):
     return render(request, 'index.html')
