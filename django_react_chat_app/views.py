@@ -10,7 +10,7 @@ def index(request):
         user = authenticate(username = request.POST.get('username', None), password = request.POST.get('password', None))
         if user:
             login(request=request, user=user)
-    return render(request, 'index.js')
+    return render(request, 'index.html')
 
 
 
