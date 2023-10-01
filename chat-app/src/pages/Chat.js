@@ -1,7 +1,27 @@
 import React, { useEffect, useRef, useState } from 'react';
+import axios from 'axios';
 
 function Chat() {
     const chatContainerRef = useRef(null);
+    const [users, setUsers] = useState([]);
+
+    const fetchUsers = async () => {
+        try {
+        const response = await axios.get('/api/v1/users/');
+        console.log(response.data);
+        setUsers(response.data);
+        } catch (error) {
+        console.error(error);
+        }
+    };
+
+    useEffect(() => {
+        fetchUsers();
+    }, []);
+
+    useEffect(() => {
+        fetchUsers();
+    }, []);
 
     useEffect(() => {
       if (chatContainerRef.current) {
@@ -36,8 +56,9 @@ function Chat() {
         <div className="flex flex-col w-1/4 bg-gray-300 p-4">
             <div className="flex min-w-0 gap-x-4">
                 <div className="min-w-0 flex-auto">
-                    <p className="text-sm font-semibold leading-6 text-gray-900">Jopa</p>
-                    {/* <p className="mt-1 truncate text-xs leading-5 text-gray-500">jopa@mail.ru</p> */}
+                    {users && users.results && users.results.map((user) => (
+                    <p className="text-sm font-semibold leading-6 text-gray-900" key={user.id}>{user.username}</p>
+                    ))}
                 </div>
             </div>
         </div>
