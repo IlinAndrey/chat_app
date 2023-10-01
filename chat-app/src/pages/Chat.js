@@ -3,12 +3,14 @@ import axios from 'axios';
 
 function Chat() {
     const chatContainerRef = useRef(null);
+    const [message, setMessage] = useState("");
     const [users, setUsers] = useState([]);
+    const [selectedUser, setSelectedUser] = useState(null);
+    const [messages, setMessages] = useState([]);
 
     const fetchUsers = async () => {
         try {
         const response = await axios.get('/api/v1/users/');
-        console.log(response.data);
         setUsers(response.data);
         } catch (error) {
         console.error(error);
@@ -19,6 +21,20 @@ function Chat() {
         fetchUsers();
     }, []);
 
+    // Загрузка сообщений для выбранного пользователя
+    useEffect(() => {
+        if (selectedUser) {
+        fetch(`/api/v1/directmessages/${selectedUser.id}`)
+            .then((response) => response.json())
+            .then((data) => setMessages(data.messages));
+        }
+    }, [selectedUser]);
+
+    // Обработчик клика на пользователя
+    const handleUserClick = (user) => {
+        setSelectedUser(user);
+    };
+
     useEffect(() => {
         fetchUsers();
     }, []);
@@ -28,9 +44,6 @@ function Chat() {
         chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
       }
     }, []);
-
-    const [message, setMessage] = useState("");
-    const [messages, setMessages] = useState([]);
 
     const handleMessageSend = () => {
         const newMessage = {
@@ -56,26 +69,32 @@ function Chat() {
         <div className="flex flex-col w-1/4 bg-gray-300 p-4">
             <div className="flex min-w-0 gap-x-4">
                 <div className="min-w-0 flex-auto">
-                    {users && users.results && users.results.map((user) => (
-                    <p className="text-sm font-semibold leading-6 text-gray-900" key={user.id}>{user.username}</p>
-                    ))}
+                {users && users.results && users.results.map((user) => (
+                    <p
+                    className="text-sm font-semibold leading-6 text-gray-900"
+                    key={user.id}
+                    onClick={() => handleUserClick(user)}
+                    >
+                    {user.username}
+                    </p>
+                ))}
                 </div>
             </div>
         </div>
         <div className='flex flex-col items-center justify-center w-full min-h-screen bg-gray-100 text-gray-800'>
             <div class="flex flex-col flex-grow w-full max-w-full bg-white shadow-xl rounded-lg overflow-hidden">
                 <div class="flex flex-col flex-grow h-0 p-4 overflow-auto" ref={chatContainerRef}>
-                    <div className="chat">
-                        {sortedMessages.map((msg, index) => (
-                            <div key={index} className="flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end">
-                                <div>
-                                    <div className="bg-blue-600 text-white p-3 rounded-l-lg rounded-br-lg">
-                                        <p className="text-sm">{msg.text}</p>
-                                    </div>
-                                    <span className="text-xs text-gray-500 leading-none">{msg.timestamp}</span>
-                                </div>
-                                <div className="flex-shrink-0 h-10 w-10 rounded-full"></div>
+                    <div className="chat flex-1 p-4">
+                        {messages.map((msg, index) => (
+                        <div key={index} className="flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end">
+                            <div>
+                            <div className="bg-blue-600 text-white p-3 rounded-l-lg rounded-br-lg">
+                                <p className="text-sm">{msg.text}</p>
                             </div>
+                            <span className="text-xs text-gray-500 leading-none">{msg.timestamp}</span>
+                            </div>
+                            <div className="flex-shrink-0 h-10 w-10 rounded-full"></div>
+                        </div>
                         ))}
                     </div>
                     <div class="flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end">
