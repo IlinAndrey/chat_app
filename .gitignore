@@ -6,6 +6,10 @@ chat-app/build
 /.pnp
 .pnp.js
 db.sqlite3
+<<<<<<< HEAD
+
+=======
+>>>>>>> 4af29ec8e6f20b0aa6dd746ce60e57d2236717e5
 
 # testing
 /coverage
