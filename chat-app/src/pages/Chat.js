@@ -13,19 +13,19 @@ function Chat() {
     const [targetRecipient, setTargetRecipient] = useState([])
 
 
-    const fetchMessages = async () => {
+    const fetchMessages = async (userId) => {
         try {
-        const response = await axios.get('/api/v1/directmessages/');
-        console.log(response.data);
-        setMessages(response.data);
+          const response = await axios.get(`/api/v1/directmessages/?userId=${userId}`);
+          console.log(response.data);
+          setMessages(response.data);
         } catch (error) {
-        console.error(error);
+          console.error(error);
         }
-    };
-
-    useEffect(() => {
-        fetchMessages();
-    }, []);
+      };
+      
+      useEffect(() => {
+        fetchMessages(targetRecipient);
+      }, [targetRecipient]);
 
     const fetchUsers = async () => {
         try {
@@ -65,6 +65,7 @@ function Chat() {
 
     const handleClick = (event) => {
         setTargetRecipient(event.target.id);
+        fetchMessages(event.target.id);
     }
 
 
@@ -108,24 +109,25 @@ function Chat() {
             <div class="flex flex-col flex-grow w-full max-w-full bg-white shadow-xl rounded-lg overflow-hidden">
                 <div class="flex flex-col flex-grow h-0 p-4 overflow-auto" ref={chatContainerRef}>
                     <div class="flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end">
-                        <div>
-                        {messages && messages.results && messages.results.map((message) => (
+                    <div>
+                        {messages &&
+                            messages.results &&
+                            messages.results.map((message) => (
                             <div key={message.id}>
-                            {message.recipient === targetRecipient ? (
+                                {message.recipient === targetRecipient ? (
                                 <div className="p-3 rounded-r-lg rounded-bl-lg">
-                                <p className="text-sm">{message.text}</p>
+                                    <p className="text-sm">{message.text}</p>
                                 </div>
-
-                            ) : (
+                                ) : (
                                 <div className="bg-blue-600 text-white p-3 rounded-l-lg rounded-br-lg">
-                                <p className="text-sm">{message.text}</p>
+                                    <p className="text-sm">{message.text}</p>
                                 </div>
-                            )}
-                            <span className="text-xs text-gray-500 leading-none">
+                                )}
+                                <span className="text-xs text-gray-500 leading-none">
                                 {message.created}
-                            </span>
+                                </span>
                             </div>
-                        ))}
+                            ))}
                         </div>
                     </div>
                 </div>
