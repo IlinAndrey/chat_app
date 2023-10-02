@@ -8,6 +8,27 @@ function Chat() {
     const [selectedUser, setSelectedUser] = useState(null);
     const [messages, setMessages] = useState([]);
 
+    const fetchMess = async () => {
+        try {
+            const response = await axios.get('/api/v1/directmessages/');
+            console.log(response.data);
+            setUsers(response.data);
+            } catch (error) {
+            console.error(error);
+            }
+        };
+    
+        useEffect(() => {
+            fetchMess();
+        }, []);
+
+
+
+
+
+
+
+
     const fetchUsers = async () => {
         try {
         const response = await axios.get('/api/v1/users/');
@@ -15,24 +36,6 @@ function Chat() {
         } catch (error) {
         console.error(error);
         }
-    };
-
-    useEffect(() => {
-        fetchUsers();
-    }, []);
-
-    // Загрузка сообщений для выбранного пользователя
-    useEffect(() => {
-        if (selectedUser) {
-        fetch(`/api/v1/directmessages/${selectedUser.id}`)
-            .then((response) => response.json())
-            .then((data) => setMessages(data.messages));
-        }
-    }, [selectedUser]);
-
-    // Обработчик клика на пользователя
-    const handleUserClick = (user) => {
-        setSelectedUser(user);
     };
 
     useEffect(() => {
@@ -70,11 +73,7 @@ function Chat() {
             <div className="flex min-w-0 gap-x-4">
                 <div className="min-w-0 flex-auto">
                 {users && users.results && users.results.map((user) => (
-                    <p
-                    className="text-sm font-semibold leading-6 text-gray-900"
-                    key={user.id}
-                    onClick={() => handleUserClick(user)}
-                    >
+                    <p className="text-sm font-semibold leading-6 text-gray-900" key={user.id}>
                     {user.username}
                     </p>
                 ))}
@@ -85,17 +84,15 @@ function Chat() {
             <div class="flex flex-col flex-grow w-full max-w-full bg-white shadow-xl rounded-lg overflow-hidden">
                 <div class="flex flex-col flex-grow h-0 p-4 overflow-auto" ref={chatContainerRef}>
                     <div className="chat flex-1 p-4">
-                        {messages.map((msg, index) => (
-                        <div key={index} className="flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end">
-                            <div>
+                        <div className="flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end">
                             <div className="bg-blue-600 text-white p-3 rounded-l-lg rounded-br-lg">
-                                <p className="text-sm">{msg.text}</p>
-                            </div>
-                            <span className="text-xs text-gray-500 leading-none">{msg.timestamp}</span>
+                            {users && users.results && users.results.map((user) => (    
+                                <p className="text-sm">P</p>
+                            ))}
+                            <span className="text-xs text-gray-500 leading-none">f</span>
                             </div>
                             <div className="flex-shrink-0 h-10 w-10 rounded-full"></div>
                         </div>
-                        ))}
                     </div>
                     <div class="flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end">
                         <div>
