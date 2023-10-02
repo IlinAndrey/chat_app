@@ -89,6 +89,7 @@ function Chat() {
                             {users && users.results && users.results.map((user) => (    
                                 <p className="text-sm">P</p>
                             ))}
+                            
                             <span className="text-xs text-gray-500 leading-none">f</span>
                             </div>
                             <div className="flex-shrink-0 h-10 w-10 rounded-full"></div>
