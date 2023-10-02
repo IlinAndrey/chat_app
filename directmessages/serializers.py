@@ -10,4 +10,4 @@ class DirectMessageSerializer(ModelSerializer):
     created = DateTimeField(read_only=True)
     class Meta:
         model = DirectMessageModel
-        fields = ['text', 'sender','recipient','created']
+        fields = ['text', 'sender','recipient','created','id']
