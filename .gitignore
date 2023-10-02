@@ -5,7 +5,7 @@ chat-app/node_modules
 chat-app/build
 /.pnp
 .pnp.js
-
+db.sqlite3
 
 # testing
 /coverage
