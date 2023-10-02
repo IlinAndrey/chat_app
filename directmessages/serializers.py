@@ -11,3 +11,4 @@ class DirectMessageSerializer(ModelSerializer):
     class Meta:
         model = DirectMessageModel
         fields = ['text', 'sender','recipient','created','id']
+
