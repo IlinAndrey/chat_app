@@ -12,7 +12,7 @@ class DirectMessageViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        recipient = self.request.data.get('recipient', None)
+        recipient = self.request.query_params.get('recipient', None)
         if recipient:
             queryset = DirectMessageModel.objects.filter(
                 Q(sender=self.request.user, recipient=recipient) |
