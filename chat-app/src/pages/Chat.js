@@ -10,27 +10,11 @@ function Chat() {
     const [users, setUsers] = useState([]);
     const [selectedUser, setSelectedUser] = useState(null);
     const [messages, setMessages] = useState([]);
-    const [targetRecipient, setTargetRecipient] = useState([])
-
-
-    const fetchMessages = async () => {
-        try {
-        const response = await axios.get(`/api/v1/directmessages/?recipient=${11}`);
-        console.log(response.data);
-        setMessages(response.data);
-        } catch (error) {
-        console.error(error);
-        }
-    };
-
-    useEffect(() => {
-        fetchMessages();
-    }, []);
+    const [targetRecipient, setTargetRecipient] = useState("")
 
     const fetchUsers = async () => {
         try {
         const response = await axios.get('/api/v1/users/');
-        console.log(response.data);
         setUsers(response.data);
         } catch (error) {
         console.error(error);
@@ -63,8 +47,14 @@ function Chat() {
     };
 
 
-    const handleClick = (event) => {
+    const handleClick = async (event) => {
         setTargetRecipient(event.target.id);
+        try {
+            const response = await axios.get(`/api/v1/directmessages/?recipient=${event.target.id}`);
+            setMessages(response.data);
+            } catch (error) {
+            console.error(error);
+            }
     }
 
 
@@ -86,7 +76,6 @@ function Chat() {
             .catch(error => {
               console.error('Ошибка выхода:', error);
             });
-    
       }
 
 
@@ -107,27 +96,33 @@ function Chat() {
         <div className='flex flex-col items-center justify-center w-full min-h-screen bg-gray-100 text-gray-800'>
             <div class="flex flex-col flex-grow w-full max-w-full bg-white shadow-xl rounded-lg overflow-hidden">
                 <div class="flex flex-col flex-grow h-0 p-4 overflow-auto" ref={chatContainerRef}>
-                    <div class="flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end">
+                    {/* <div class="flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end"> */}
                         <div>
                         {messages && messages.results && messages.results.map((message) => (
                             <div key={message.id}>
-                            {message.recipient === targetRecipient ? (
-                                <div className="p-3 rounded-r-lg rounded-bl-lg">
-                                <p className="text-sm">{message.text}</p>
+                            {message.recipient == targetRecipient ? (
+                                <div className="flex justify-end">
+                                    <div className="bg-blue-600 text-white p-3 rounded-l-lg rounded-br-lg mb-5">
+                                        <p className="text-sm">{message.text}</p>
+                                    </div>
+                                    <span className="text-xs text-gray-500 leading-none">
+                                        {message.created}
+                                    </span>
                                 </div>
-
                             ) : (
-                                <div className="bg-blue-600 text-white p-3 rounded-l-lg rounded-br-lg">
-                                <p className="text-sm">{message.text}</p>
+                                <div className="flex justify-start">
+                                    <div className="bg-gray-200 p-3 rounded-r-lg rounded-bl-lg justify-start mb-5">
+                                        <p className="text-sm">{message.text}</p>
+                                    </div>
+                                    <span className="text-xs text-gray-500 leading-none">
+                                        {message.created}
+                                    </span>
                                 </div>
                             )}
-                            <span className="text-xs text-gray-500 leading-none">
-                                {message.created}
-                            </span>
                             </div>
                         ))}
                         </div>
-                    </div>
+                    {/* </div> */}
                 </div>
                 
                 <div className="flex bg-gray-100 p-4 items-center ">
