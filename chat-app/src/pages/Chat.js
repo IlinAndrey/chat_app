@@ -13,7 +13,34 @@ function Chat() {
     const [messages, setMessages] = useState([]);
     const [targetRecipient, setTargetRecipient] = useState("")
 
+
+
+
+
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     const WS_URL = `ws://localhost:8000/ws/chat/${targetRecipient}/`;
+
+    const { sendJsonMessage } = useWebSocket(WS_URL, {
+      share: true,
+      filter: isDocumentEvent
+    });
+    // let html = lastJsonMessage?.data.editorContent || '';
 
 
     useWebSocket(WS_URL, {
@@ -21,6 +48,20 @@ function Chat() {
         console.log('WebSocket connection established.');
       }
     });
+
+
+    function handleHtmlChange(e) {
+      sendJsonMessage({
+        recipient: targetRecipient,
+        text: message
+      });
+    }
+
+
+
+
+
+
 
     const fetchUsers = async () => {
         try {
@@ -77,16 +118,16 @@ function Chat() {
       // }
 
 
-      const sendMessage = (e) => {
-        e.preventDefault();
+      // const sendMessage = (e) => {
+      //   e.preventDefault();
       
-        const messageData = {
-          recipient: targetRecipient,
-          text: message
-        };
+      //   const messageData = {
+      //     recipient: targetRecipient,
+      //     text: message
+      //   };
       
-        socket.send(JSON.stringify(messageData));
-      };
+      //   WS_URL.send(JSON.stringify(messageData));
+      // };
 
 
 
@@ -178,7 +219,7 @@ function Chat() {
                 <button
                     className="h-10 bg-blue-500 hover:bg-blue-700 text-white font-bold mx-4 px-4 rounded"
                     type="submit"
-                    onClick={sendMessage}
+                    onClick={handleHtmlChange}
                 >
                     Отправить
                 </button>
