@@ -84,7 +84,7 @@ function Chat() {
           recipient: targetRecipient,
           text: message
         };
-        socket.send(JSON.stringify(messageData));
+        WS_URL.send(JSON.stringify(messageData));
       };
 
 
