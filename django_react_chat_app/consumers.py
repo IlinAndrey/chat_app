@@ -11,7 +11,9 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
     directmessages_serializer_class = DirectMessageSerializer
     async def connect(self):
         self.sender = self.scope['user']
-        self.room_name = '_'.join(sorted([(self.scope['url_route']['kwargs']['recipient_id']), str(self.sender.id)]))
+        print(self.sender.id)
+        print(self.scope['url_route']['kwargs']['recipient_id'])
+        self.room_name = '_'.join(map(str,sorted([int(self.scope['url_route']['kwargs']['recipient_id']), self.sender.id])))
         print(self.room_name)
         self.room_group_name = f'chat_{self.room_name}'
         await self.channel_layer.group_add(self.room_group_name, self.channel_name)
