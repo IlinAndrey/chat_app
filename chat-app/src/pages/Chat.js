@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import useWebSocket from 'react-use-websocket';
+import io from 'socket.io-client'
+
 
 
 function Chat() {
@@ -13,63 +14,21 @@ function Chat() {
     const [selectedUser, setSelectedUser] = useState(null);
     const [messages, setMessages] = useState([]);
     const [targetRecipient, setTargetRecipient] = useState("")
+    const [messageReceived, setMessageReceived] = useState("")
+    const socket = io.connect(`ws://localhost:8000/ws/chat/${targetRecipient}/`)
 
 
 
 
+    const sendMessage = () => {
+      socket.emit("send_message", { message })
+    }
 
-      
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    const WS_URL = `ws://localhost:8000/ws/chat/${targetRecipient}/`;
-
-
-    // useWebSocket(WS_URL, {
-    //   onOpen: () => {
-    //     console.log('WebSocket connection established.');
-    //   }
-    // });
-
-
-    WS_URL.on('connection', socket  => {
-      console.log('Connected')
-  
-      //send this to every new ws connection
-      socket .send(JSON.stringify({
-          "Cookie": {
-            'csrftoken' : csrftoken,
-            'sessionid' : sessionid,
-          },
-          // "body": {
-          //   // "eventName": "PlayerMessage"    
-          // },
-      }))
-  
-  
-      socket.on('message', packet => {
-          const msg = JSON.parse(packet)
-          console.log(msg)
-      })
-  })
-
-
-
-
-
+    useEffect(() => {
+      socket.on("recive_message", (data) => {
+        setMessageReceived(data.message);
+      });
+    }, [socket])
 
 
 
@@ -194,7 +153,7 @@ function Chat() {
         <div className='flex flex-col items-center justify-center w-full min-h-screen bg-gray-100 text-gray-800'>
             <div class="flex flex-col flex-grow w-full max-w-full bg-white shadow-xl rounded-lg overflow-hidden">
                 <div class="flex flex-col flex-grow h-0 p-4 overflow-auto" ref={chatContainerRef}>
-                        <div>
+                        {/* <div>
                         {messages && messages.results && messages.results.map((message) => (
                             <div key={message.id}>
                             {message.recipient == targetRecipient ? (
@@ -218,7 +177,8 @@ function Chat() {
                             )}
                             </div>
                         ))}
-                        </div>
+                        </div> */}
+                        {setMessageReceived}
                 </div>
                 
                 <form className="flex bg-gray-100 p-4 items-center ">
@@ -233,7 +193,7 @@ function Chat() {
                 <button
                     className="h-10 bg-blue-500 hover:bg-blue-700 text-white font-bold mx-4 px-4 rounded"
                     type="submit"
-                    // onClick={handleHtmlChange}
+                    onClick={sendMessage}
                 >
                     Отправить
                 </button>
