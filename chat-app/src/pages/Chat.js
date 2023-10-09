@@ -96,7 +96,7 @@ function Chat() {
       // const sendMessage = (e) => {
       //   console.log(message)
       //   e.preventDefault();
-    
+
       //     axios.post('/api/v1/directmessages/', {
       //        csrftoken: csrftoken,
       //        text: message,
@@ -114,10 +114,11 @@ function Chat() {
       //       .catch(error => {
       //         console.error('Ошибка отправки:', error);
       //       });
-    
+
       // }
 
 
+<<<<<<< HEAD
       // const sendMessage = (e) => {
       //   e.preventDefault();
       
@@ -128,6 +129,17 @@ function Chat() {
       
       //   WS_URL.send(JSON.stringify(messageData));
       // };
+=======
+      const sendMessage = (e) => {
+        e.preventDefault();
+
+        const messageData = {
+          recipient: targetRecipient,
+          text: message
+        };
+        WS_URL.send(JSON.stringify(messageData));
+      };
+>>>>>>> e0e61c722bf9d03ca36cfb941c60e2065fb87034
 
 
 
