@@ -6,6 +6,7 @@ import useWebSocket from 'react-use-websocket';
 
 function Chat() {
     const csrftoken = Cookies.get('csrftoken')
+    const sessionid = Cookies.get('sessionid')
     const chatContainerRef = useRef(null);
     const [message, setMessage] = useState("");
     const [users, setUsers] = useState([]);
@@ -36,26 +37,35 @@ function Chat() {
 
     const WS_URL = `ws://localhost:8000/ws/chat/${targetRecipient}/`;
 
-    // const { sendJsonMessage } = useWebSocket(WS_URL, {
-    //   share: true,
-    //   //filter: isDocumentEvent
+
+    // useWebSocket(WS_URL, {
+    //   onOpen: () => {
+    //     console.log('WebSocket connection established.');
+    //   }
     // });
-    // let html = lastJsonMessage?.data.editorContent || '';
 
 
-    useWebSocket(WS_URL, {
-      onOpen: () => {
-        console.log('WebSocket connection established.');
-      }
-    });
+    WS_URL.on('connection', socket  => {
+      console.log('Connected')
+  
+      //send this to every new ws connection
+      socket .send(JSON.stringify({
+          "Cookie": {
+            'csrftoken' : csrftoken,
+            'sessionid' : sessionid,
+          },
+          // "body": {
+          //   // "eventName": "PlayerMessage"    
+          // },
+      }))
+  
+  
+      socket.on('message', packet => {
+          const msg = JSON.parse(packet)
+          console.log(msg)
+      })
+  })
 
-
-    // function handleHtmlChange(e) {
-    //   sendJsonMessage({
-    //     recipient: targetRecipient,
-    //     text: message
-    //   });
-    // }
 
 
 
