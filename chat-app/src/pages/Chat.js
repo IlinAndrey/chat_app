@@ -36,10 +36,10 @@ function Chat() {
 
     const WS_URL = `ws://localhost:8000/ws/chat/${targetRecipient}/`;
 
-    const { sendJsonMessage } = useWebSocket(WS_URL, {
-      share: true,
-      filter: isDocumentEvent
-    });
+    // const { sendJsonMessage } = useWebSocket(WS_URL, {
+    //   share: true,
+    //   //filter: isDocumentEvent
+    // });
     // let html = lastJsonMessage?.data.editorContent || '';
 
 
@@ -50,12 +50,12 @@ function Chat() {
     });
 
 
-    function handleHtmlChange(e) {
-      sendJsonMessage({
-        recipient: targetRecipient,
-        text: message
-      });
-    }
+    // function handleHtmlChange(e) {
+    //   sendJsonMessage({
+    //     recipient: targetRecipient,
+    //     text: message
+    //   });
+    // }
 
 
 
@@ -118,7 +118,7 @@ function Chat() {
       // }
 
 
-<<<<<<< HEAD
+
       // const sendMessage = (e) => {
       //   e.preventDefault();
       
@@ -129,17 +129,9 @@ function Chat() {
       
       //   WS_URL.send(JSON.stringify(messageData));
       // };
-=======
-      const sendMessage = (e) => {
-        e.preventDefault();
 
-        const messageData = {
-          recipient: targetRecipient,
-          text: message
-        };
-        WS_URL.send(JSON.stringify(messageData));
-      };
->>>>>>> e0e61c722bf9d03ca36cfb941c60e2065fb87034
+
+
 
 
 
@@ -147,7 +139,7 @@ function Chat() {
       
     const handleKeyDown = (e) => {
       if (e.keyCode === 13) {
-      sendMessage();
+      //sendMessage();
       }
   };
 
@@ -231,7 +223,7 @@ function Chat() {
                 <button
                     className="h-10 bg-blue-500 hover:bg-blue-700 text-white font-bold mx-4 px-4 rounded"
                     type="submit"
-                    onClick={handleHtmlChange}
+                    // onClick={handleHtmlChange}
                 >
                     Отправить
                 </button>
