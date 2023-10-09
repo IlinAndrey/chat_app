@@ -1,12 +1,45 @@
-import React from 'react'
+import {React, useEffect, useState} from 'react'
 import {
     createBrowserRouter,
     RouterProvider,
     Route,
     Link,
   } from "react-router-dom";
+import Cookies from 'js-cookie';
+import axios from 'axios';
 
 function Register() {
+  const csrftoken = Cookies.get('csrftoken')
+
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+
+  const handleRegister = (e) => {
+    e.preventDefault();
+
+    const data = { csrftoken, username, email, password };
+
+      axios.post('/api/v1/users/', data, {
+        headers: {
+          'X-CSRFToken' : csrftoken,
+          'Content-Type': 'application/x-www-form-urlencoded',
+          }
+      })
+        .then(response => {
+          console.log('Успешный регистрация:', response.data);
+          window.location.href = '/';
+        })
+        .catch(error => {
+          console.error('Ошибка входа:', error);
+        });
+
+  }
+
+  
+
+
   return (
     <div>
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -17,18 +50,19 @@ function Register() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" action="#" method="POST">
+          <form className="space-y-6" onSubmit={handleRegister}>
 
           <div>
               <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
-                Nickname
+                Username
               </label>
               <div className="mt-2">
                 <input
-                  id="text"
-                  name="text"
-                  type="text"
-                  autoComplete="name"
+                  id="username"
+                  name="username"
+                  type="username"
+                  autoComplete="username"
+                  onChange={e => setUsername(e.target.value)}
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -45,6 +79,7 @@ function Register() {
                   name="email"
                   type="email"
                   autoComplete="email"
+                  onChange={e => setEmail(e.target.value)}
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -68,6 +103,7 @@ function Register() {
                   name="password"
                   type="password"
                   autoComplete="current-password"
+                  onChange={e => setPassword(e.target.value)}
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />

@@ -42,14 +42,13 @@ function Chat() {
         }
       };
 
-      const sendMessage = (e) => {
+      const sendMessage = async (e) => {
         console.log(message)
         e.preventDefault();
     
           axios.post('/api/v1/directmessages/', {
              csrftoken: csrftoken,
              text: message,
-             sender: 10,
              recipient: targetRecipient,
             }, {
             headers: {
@@ -57,10 +56,14 @@ function Chat() {
               'Content-Type': 'application/x-www-form-urlencoded',
               }
           })
-            .then(response => {
-              console.log('ОТправлено:', response.data);
-              setMessage(response.data);
-            })
+          .then(async response => {
+            try {
+              const getResponse = await axios.get(`/api/v1/directmessages/?recipient=${targetRecipient}`);
+              setMessage(getResponse.data);
+            } catch (error) {
+              console.error('Ошибка получения:', error);
+            }
+          })
             .catch(error => {
               console.error('Ошибка отправки:', error);
             });
