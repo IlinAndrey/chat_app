@@ -11,4 +11,6 @@ class DirectMessageSerializer(ModelSerializer):
     class Meta:
         model = DirectMessageModel
         fields = ['text', 'sender','recipient','created','id']
-
+        extra_kwargs = {
+            'sender': {'read_only': True}
+        }
