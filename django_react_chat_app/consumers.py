@@ -1,10 +1,14 @@
 import json
 
-from asgiref.sync import async_to_sync
+from asgiref.sync import async_to_sync, sync_to_async
 from channels.generic.websocket import WebsocketConsumer, AsyncWebsocketConsumer, AsyncJsonWebsocketConsumer
+
+from directmessages.models import DirectMessageModel
+from directmessages.serializers import DirectMessageSerializer
 
 
 class ChatConsumer(AsyncJsonWebsocketConsumer):
+    directmessages_serializer_class = DirectMessageSerializer
     async def connect(self):
         self.room_name = self.scope['url_route']['kwargs']['room_name']
         self.room_group_name = f'chat_{self.room_name}'
@@ -15,14 +19,26 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
         self.channel_layer.group_discard(self.room_group_name, self.channel_name)
 
     async def receive(self, text_data=None, bytes_data=None, **kwargs):
-        print(text_data)
+        sender = self.scope['user']
+
+        if not sender.is_anonymous and sender.is_authenticated :
+            data = json.loads(text_data)
+            serializer = self.directmessages_serializer_class(data = data)
+            if await sync_to_async(serializer.is_valid)():
+
+                await sync_to_async(serializer.save)(sender=sender)
+                print(serializer)
+        else:
+            data = {'text':'U are not authenticated, error'}
+        print(data)
         print(bytes_data)
+
         await self.channel_layer.group_send(self.room_group_name,
-                                            {'type': 'chat.message', 'message': text_data}
+                                            {'type': 'chat.message', 'message': json.dumps(data)}
                                             )
         # self.send(text_data=json.dumps({'message': text_data}))
 
     async def chat_message(self, event):
         message = event['message']
 
-        await self.send(text_data=json.dumps({'message': message}))
+        await self.send(text_data=message)
