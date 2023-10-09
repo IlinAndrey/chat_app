@@ -77,7 +77,16 @@ function Chat() {
       // }
 
 
-
+      const sendMessage = (e) => {
+        e.preventDefault();
+      
+        const messageData = {
+          recipient: targetRecipient,
+          text: message
+        };
+      
+        socket.send(JSON.stringify(messageData));
+      };
 
 
 
