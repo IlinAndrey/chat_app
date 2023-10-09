@@ -31,31 +31,49 @@ function Chat() {
       }
     }, []);
 
-    const handleMessageSend = () => {
-        const newMessage = {
-        text: message,
-        timestamp: new Date().toLocaleString()
-        };
-        setMessages([newMessage, ...messages]);
-        setMessage("");
-    };
-
-    const handleKeyDown = (e) => {
-        if (e.keyCode === 13) {
-        handleMessageSend();
-        }
-    };
-
-
     const handleClick = async (event) => {
-        setTargetRecipient(event.target.id);
+        const recipientId = event.target.id;
+        setTargetRecipient(recipientId);
         try {
-            const response = await axios.get(`/api/v1/directmessages/?recipient=${event.target.id}`);
-            setMessages(response.data);
-            } catch (error) {
-            console.error(error);
-            }
-    }
+          const response = await axios.get(`/api/v1/directmessages/?recipient=${recipientId}`);
+          setMessages(response.data);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+
+      const sendMessage = (e) => {
+        console.log(message)
+        e.preventDefault();
+    
+          axios.post('/api/v1/directmessages/', {
+             csrftoken: csrftoken,
+             text: message,
+             sender: 10,
+             recipient: targetRecipient,
+            }, {
+            headers: {
+              'X-CSRFToken' : csrftoken,
+              'Content-Type': 'application/x-www-form-urlencoded',
+              }
+          })
+            .then(response => {
+              console.log('ОТправлено:', response.data);
+              setMessage(response.data);
+            })
+            .catch(error => {
+              console.error('Ошибка отправки:', error);
+            });
+    
+      }
+      
+    const handleKeyDown = (e) => {
+      if (e.keyCode === 13) {
+      sendMessage();
+      }
+  };
+
+
 
 
     const handleLogout = (e) => {
@@ -123,22 +141,23 @@ function Chat() {
                         </div>
                 </div>
                 
-                <div className="flex bg-gray-100 p-4 items-center ">
+                <form className="flex bg-gray-100 p-4 items-center ">
                 <input
                     className="h-10 w-11/12 rounded px-3 text-sm"
                     type="text"
                     placeholder="Писать тут"
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
+                    // value={message}
+                    onChange={e => setMessage(e.target.value)}
                     onKeyDown={handleKeyDown}
                 />
                 <button
                     className="h-10 bg-blue-500 hover:bg-blue-700 text-white font-bold mx-4 px-4 rounded"
-                    onClick={handleMessageSend}
+                    type="submit"
+                    onClick={sendMessage}
                 >
                     Отправить
                 </button>
-                </div>
+                </form>
             </div>
         </div>
     </div>
