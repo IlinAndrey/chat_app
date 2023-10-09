@@ -138,11 +138,8 @@ STATICFILES_DIRS = [
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-<<<<<<< HEAD
+
     'PAGE_SIZE': 100
-=======
-    'PAGE_SIZE': 10
->>>>>>> ef53f100ffa9c5ff59f6d088b3a7535ae1becdd2
 }
 
 LOGIN_REDIRECT_URL = '/chat/'
