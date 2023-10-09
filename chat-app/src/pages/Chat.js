@@ -17,6 +17,7 @@ function Chat() {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     const WS_URL = `ws://localhost:8000/ws/chat/${targetRecipient}/`;
 
@@ -42,6 +43,11 @@ function Chat() {
 
 
 >>>>>>> 1bf60a847bfb41f1a087c376f2e9290a01dcf549
+=======
+    const WS_URL = `ws://localhost:8000/ws/chat/${targetRecipient}/`;
+
+
+>>>>>>> refs/remotes/origin/main
     useWebSocket(WS_URL, {
       onOpen: () => {
         console.log('WebSocket connection established.');
@@ -78,6 +84,7 @@ function Chat() {
         }
       };
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -246,6 +253,35 @@ function Chat() {
       const sendMessage = (e) => {
         e.preventDefault();
 >>>>>>> 1bf60a847bfb41f1a087c376f2e9290a01dcf549
+=======
+      // const sendMessage = (e) => {
+      //   console.log(message)
+      //   e.preventDefault();
+    
+      //     axios.post('/api/v1/directmessages/', {
+      //        csrftoken: csrftoken,
+      //        text: message,
+      //        recipient: targetRecipient,
+      //       }, {
+      //       headers: {
+      //         'X-CSRFToken' : csrftoken,
+      //         'Content-Type': 'application/x-www-form-urlencoded',
+      //         }
+      //     })
+      //       .then(response => {
+      //         setMessage(response.data);
+      //         window.location.reload();
+      //       })
+      //       .catch(error => {
+      //         console.error('Ошибка отправки:', error);
+      //       });
+    
+      // }
+
+
+      const sendMessage = (e) => {
+        e.preventDefault();
+>>>>>>> refs/remotes/origin/main
       
         const messageData = {
           recipient: targetRecipient,
@@ -257,6 +293,7 @@ function Chat() {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 1bf60a847bfb41f1a087c376f2e9290a01dcf549
 =======
 >>>>>>> 1bf60a847bfb41f1a087c376f2e9290a01dcf549
@@ -264,6 +301,8 @@ function Chat() {
 >>>>>>> 1bf60a847bfb41f1a087c376f2e9290a01dcf549
 =======
 >>>>>>> 1bf60a847bfb41f1a087c376f2e9290a01dcf549
+=======
+>>>>>>> refs/remotes/origin/main
 
 
 
