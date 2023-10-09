@@ -13,7 +13,7 @@ function Chat() {
     const [messages, setMessages] = useState([]);
     const [targetRecipient, setTargetRecipient] = useState("")
 
-    const WS_URL = 'ws://localhost:8000/ws/chat/test/';
+    const WS_URL = `ws://localhost:8000/ws/chat/${targetRecipient}/`;
 
 
     useWebSocket(WS_URL, {
@@ -52,29 +52,33 @@ function Chat() {
         }
       };
 
-      const sendMessage = (e) => {
-        console.log(message)
-        e.preventDefault();
+      // const sendMessage = (e) => {
+      //   console.log(message)
+      //   e.preventDefault();
     
-          axios.post('/api/v1/directmessages/', {
-             csrftoken: csrftoken,
-             text: message,
-             recipient: targetRecipient,
-            }, {
-            headers: {
-              'X-CSRFToken' : csrftoken,
-              'Content-Type': 'application/x-www-form-urlencoded',
-              }
-          })
-            .then(response => {
-              setMessage(response.data);
-              window.location.reload();
-            })
-            .catch(error => {
-              console.error('Ошибка отправки:', error);
-            });
+      //     axios.post('/api/v1/directmessages/', {
+      //        csrftoken: csrftoken,
+      //        text: message,
+      //        recipient: targetRecipient,
+      //       }, {
+      //       headers: {
+      //         'X-CSRFToken' : csrftoken,
+      //         'Content-Type': 'application/x-www-form-urlencoded',
+      //         }
+      //     })
+      //       .then(response => {
+      //         setMessage(response.data);
+      //         window.location.reload();
+      //       })
+      //       .catch(error => {
+      //         console.error('Ошибка отправки:', error);
+      //       });
     
-      }
+      // }
+
+
+
+
 
 
       
