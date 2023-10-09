@@ -55,7 +55,11 @@ function Chat() {
       // const sendMessage = (e) => {
       //   console.log(message)
       //   e.preventDefault();
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 1bf60a847bfb41f1a087c376f2e9290a01dcf549
       //     axios.post('/api/v1/directmessages/', {
       //        csrftoken: csrftoken,
       //        text: message,
@@ -73,18 +77,30 @@ function Chat() {
       //       .catch(error => {
       //         console.error('Ошибка отправки:', error);
       //       });
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 1bf60a847bfb41f1a087c376f2e9290a01dcf549
       // }
 
 
       const sendMessage = (e) => {
         e.preventDefault();
+<<<<<<< HEAD
 
+=======
+      
+>>>>>>> 1bf60a847bfb41f1a087c376f2e9290a01dcf549
         const messageData = {
           recipient: targetRecipient,
           text: message
         };
+<<<<<<< HEAD
 
+=======
+      
+>>>>>>> 1bf60a847bfb41f1a087c376f2e9290a01dcf549
         socket.send(JSON.stringify(messageData));
       };
 
