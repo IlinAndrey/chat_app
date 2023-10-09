@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import useWebSocket from 'react-use-websocket';
 
 
 function Chat() {
@@ -11,6 +12,15 @@ function Chat() {
     const [selectedUser, setSelectedUser] = useState(null);
     const [messages, setMessages] = useState([]);
     const [targetRecipient, setTargetRecipient] = useState("")
+
+    const WS_URL = 'ws://localhost:8000/ws/chat/9/';
+
+
+    useWebSocket(WS_URL, {
+      onOpen: () => {
+        console.log('WebSocket connection established.');
+      }
+    });
 
     const fetchUsers = async () => {
         try {
@@ -42,7 +52,7 @@ function Chat() {
         }
       };
 
-      const sendMessage = async (e) => {
+      const sendMessage = (e) => {
         console.log(message)
         e.preventDefault();
     
@@ -56,19 +66,18 @@ function Chat() {
               'Content-Type': 'application/x-www-form-urlencoded',
               }
           })
-          .then(async response => {
-            try {
-              const getResponse = await axios.get(`/api/v1/directmessages/?recipient=${targetRecipient}`);
-              setMessage(getResponse.data);
-            } catch (error) {
-              console.error('Ошибка получения:', error);
-            }
-          })
+            .then(response => {
+              setMessage(response.data);
+              window.location.reload();
+            })
             .catch(error => {
               console.error('Ошибка отправки:', error);
             });
     
       }
+
+
+      
       
     const handleKeyDown = (e) => {
       if (e.keyCode === 13) {
