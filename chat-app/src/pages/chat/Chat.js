@@ -9,7 +9,7 @@ function Chat() {
   const csrftoken = Cookies.get('csrftoken')
   const sessionid = Cookies.get('sessionid')
 
-  const { readyState } = useWebSocket("ws://127.0,0.1:8000/ws/chat/9/", {
+  const { readyState } = useWebSocket("ws://127.0.0.1:8000/ws/chat/9/", {
     headers: {
       ['csrftoken']: csrftoken,
       ['sessionid']: sessionid,
