@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 
-function SideBar() {
-    const [users, setUsers] = useState([])
+function SideBar({ onSelectUser }) {
+    const [users, setUsers] = useState([]);
+    const [selectedUser, setSelectedUser] = useState(null);
 
     const fetchUsers = async () => {
         try{
@@ -17,10 +18,15 @@ function SideBar() {
         fetchUsers();
     }, []);
 
+    const handleUserClick = (user) => {
+        setSelectedUser(user.id);
+        onSelectUser(user.id);
+    };
+
   return (
     <div className="min-w-0 flex-auto">
         {users && users.results && users.results.map((user) => (
-            <p className="text-sm font-semibold leading-6 text-gray-900" key={user.id} id={user.id}>
+            <p className="text-sm font-semibold leading-6 text-gray-900" key={user.id} id={user.id} onClick={() => handleUserClick(user)}>
                 {user.username}
             </p>
         ))}
